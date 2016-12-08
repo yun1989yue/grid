@@ -1,0 +1,36 @@
+You are given a map in form of a two-dimensional integer grid where 1 represents land and 0 represents water. Grid cells are connected horizontally/vertically (not diagonally). The grid is completely surrounded by water, and there is exactly one island (i.e., one or more connected land cells). The island doesn't have "lakes" (water inside that isn't connected to the water around the island). One cell is a square with side length 1. The grid is rectangular, width and height don't exceed 100. Determine the perimeter of the island.
+Example:
+[[0,1,0,0],
+ [1,1,1,0],
+ [0,1,0,0],
+ [1,1,0,0]]
+
+Answer: 16
+Explanation: The perimeter is the 16 yellow stripes in the image below:
+
+
+"""
+time: O(m*n*4)
+space:O(1)
+Method:
+1) for each cell with value 1, the contribution it provides for perimeter equals to the number of 0s around it
+"""
+class Solution(object):
+    def islandPerimeter(self, grid):
+        """
+        :type grid: List[List[int]]
+        :rtype: int
+        """
+        dire = [[0,1],[0,-1],[1,0],[-1,0]]
+        res = 0
+        for i in xrange(len(grid)):
+            for j in xrange(len(grid[0])):
+                if grid[i][j] == 1:
+                    for d in dire:
+                        x = i + d[0]
+                        y = j + d[1]
+                        if x < 0 or y < 0 or x >= len(grid) or y >= len(grid[0]):
+                            res += 1
+                        elif grid[x][y] == 0:
+                            res += 1
+        return res
